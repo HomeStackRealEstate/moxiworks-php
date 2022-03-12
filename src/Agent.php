@@ -252,6 +252,9 @@ class Agent extends Resource {
      */
     public $last_name;
 
+    public $access_level;
+    public $profile_visible_online;
+
     /**
      * Agent constructor.
      * @param array $data
