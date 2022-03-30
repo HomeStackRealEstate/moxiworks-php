@@ -21,6 +21,8 @@ class Contact extends Resource {
      */
     public $moxi_works_agent_id;
 
+    public $agent_uuid;
+
     /**
      * @var string your system's unique ID for the contact
      *   *your system's* unique ID for the Contact
@@ -637,25 +639,27 @@ class Contact extends Resource {
         $url = Config::getUrl() . "/api/contacts";
         $results = array();
 
-        $required_opts = array('moxi_works_agent_id');
-        $search_attrs = array('contact_name', 'phone_number', 'email_address');
+        $required_opts = array('agent_uuid');
+        $search_attrs = []; //array('contact_name', 'phone_number', 'email_address');
 
         if(count(array_intersect(array_keys($attributes), $required_opts)) != count($required_opts))
             throw new ArgumentException(implode(',', $required_opts) . " are required");
 
-        if(count(array_intersect(array_keys($attributes), $search_attrs)) == 0)
-            throw new ArgumentException("at least one of " . implode(',', $search_attrs) . " are required");
+        //if(count(array_intersect(array_keys($attributes), $search_attrs)) == 0)
+        //    throw new ArgumentException("at least one of " . implode(',', $search_attrs) . " are required");
 
         $json = Resource::apiConnection($method, $url, $attributes);
 
         if(!isset($json) || empty($json))
             return $results;
 
-        foreach($json as $element) {
+        return $json;
+
+        /*foreach($json as $element) {
             $contact = new Contact($element);
             array_push($results, $contact);
         }
-        return $results;
+        return $results;*/
     }
 
 
